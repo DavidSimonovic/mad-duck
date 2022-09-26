@@ -108,4 +108,7 @@ return [
 
     'password_timeout' => 10800,
 
+
+    'token_prefix' => 'mad-duck-todo-list',
+
 ];

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('task_title');
             $table->text('task_description');
+            $table->boolean('status');
             $table->foreignId('todo_list_id');
             $table->timestamps();
         });
