@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
+
+    protected $fillable =
+        [
+            'task_title',
+            'task_description',
+            'status',
+            'todo_list_id',
+        ];
 }

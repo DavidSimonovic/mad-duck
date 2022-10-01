@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Timezone;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Faker;
 
 class UserSeeder extends Seeder
 {
@@ -14,6 +17,25 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $faker = Faker\Factory::create();
+
+        for ($i = 0; $i < 10; $i++) {
+            $timezone = Timezone::inRandomOrder()->first();
+
+            User::create([
+                'username' => $faker->username,
+                'email' => $faker->email,
+                'password' => Hash::make('123456789'),
+                'timezone_id' => $timezone->id,
+
+            ]);
+        }
+
+        User::create([
+            'username' => 'davidUsername',
+            'email' => 'david@test.com',
+            'password' => Hash::make('123456789'),
+            'timezone_id' => $timezone->id,
+        ]);
     }
 }

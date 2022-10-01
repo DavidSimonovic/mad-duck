@@ -45,10 +45,9 @@ class UserRepository extends BaseRepository implements BaseRepositoryInterface
     public function registration($request): mixed
     {
         return $this->model::create([
-            'username' => $request->first_name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-
         ]);
     }
 }

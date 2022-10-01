@@ -13,14 +13,16 @@ class TodoListResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param Request $request
-     * @return array|Arrayable|JsonSerializable
+     * @return array
      */
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'title' => $this->title,
+            'description' => $this->description,
             'finished_task_count' => count($this->tasks->where('status', 1)),
-            'unfinished_task_count' => count($this->tasks->where('status', 0)),
+            'unfinished_task_count' => count($this->tasks->where('status', 0))
         ];
     }
 }

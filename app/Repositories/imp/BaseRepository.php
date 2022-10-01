@@ -3,8 +3,8 @@
 namespace App\Repositories\imp;
 
 use App\Repositories\BaseRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  *
@@ -19,14 +19,13 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
     }
 
-
     /**
      * @param int $per_page
-     * @return Collection
+     * @return mixed
      */
-    public function index(int $per_page): Collection
+    public function index(int $per_page): mixed
     {
-        return $this->model->all()->paginate($per_page);
+        return $this->model->orderByDesc('id')->paginate($per_page);
     }
 
     /**
@@ -35,7 +34,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function show(int $id): mixed
     {
-        return $this->model->find($id);
+        return $this->model->where('id',$id)->get();
     }
 
     /**
@@ -44,7 +43,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function delete(int $id): mixed
     {
-        return $this->model->find($id)->delete();
+        return $this->model->where('id',$id)->delete();
     }
 
 }

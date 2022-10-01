@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class IndexRequest extends FormRequest
+class CreateTodoListRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class IndexRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -24,9 +25,8 @@ class IndexRequest extends FormRequest
     public function rules()
     {
         return [
-            'per_page' => 'int',
-            'type' => 'string|max:10|min:1',
-            'value' => 'string|max:10|min:1',
+            'title' => 'bail|required|string|max:50|min:2',
+            'description' => 'nullable|text|max:200|min:2'
         ];
     }
 }
