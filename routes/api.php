@@ -27,7 +27,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('todo/title/{id}', [TodoListController::class, 'updateTitle']);
     Route::post('todo/description/{id}', [TodoListController::class, 'updateDescription']);
 
-    Route::apiResource('task', TodoListController::class)->except(['edit']);
+    Route::apiResource('task', TaskController::class)->except(['edit']);
     Route::post('task/title/{id}', [TaskController::class, 'updateTitle']);
     Route::post('task/description/{id}', [TaskController::class, 'updateDescription']);
     Route::post('task/deadline/{id}', [TaskController::class, 'updateDeadline']);

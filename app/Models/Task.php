@@ -13,7 +13,9 @@ class Task extends Model
         [
             'task_title',
             'task_description',
+            'user_id',
             'status',
+            'deadline',
             'todo_list_id',
         ];
 }

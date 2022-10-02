@@ -33,8 +33,7 @@ class TaskSeeder extends Seeder
                 'status' => $faker->boolean,
                 'user_id' => $user->id,
                 'todo_list_id' => $todoList->id,
-                'urgency' => config('todo_urgency.important'),
-                'deadline' => Carbon::today()->subDays(5),
+                'deadline' => Carbon::today()->subDays(+5),
             ]);
             Task::create([
                 'task_title' => $faker->word,
@@ -42,8 +41,7 @@ class TaskSeeder extends Seeder
                 'status' => $faker->boolean,
                 'user_id' => $user->id,
                 'todo_list_id' => $todoList->id,
-                'urgency' => config('todo_urgency.normal'),
-                'deadline' => Carbon::today()->subDays(15),
+                'deadline' => Carbon::today()->subDays(+15),
             ]);
 
             Task::create([
@@ -52,8 +50,7 @@ class TaskSeeder extends Seeder
                 'status' => $faker->boolean,
                 'user_id' => $user->id,
                 'todo_list_id' => $todoList->id,
-                'urgency' => config('todo_urgency.can_be_delayed'),
-                'deadline' => Carbon::today()->subDays(20),
+                'deadline' => Carbon::today()->subDays(+20),
             ]);
         }
     }

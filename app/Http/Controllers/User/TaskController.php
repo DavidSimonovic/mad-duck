@@ -81,13 +81,14 @@ class TaskController extends Controller
      */
     public function store(CreateTaskRequest $request)
     {
-        $todoList = $this->taskRepository->createTask($request);
 
-        if ($todoList) {
-            return $this->returnResponseSuccess(new TaskResource($todoList), null, HttpCode::SUCCESS);
+        $task = $this->taskRepository->createTask($request);
+
+        if ($task) {
+            return $this->returnResponseSuccess(new TaskResource($task), null, HttpCode::SUCCESS);
         }
 
-        return $this->returnResponseError(null, __('No Todo list with that id.'), HttpCode::NOT_FOUND);
+        return $this->returnResponseError(null, __('Something went wrong'), HttpCode::BAD_REQUEST);
     }
 
     /**

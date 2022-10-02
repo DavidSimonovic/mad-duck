@@ -24,7 +24,6 @@ class TaskResource extends JsonResource
             'task_description' => $this->task_description,
             'status' => $this->status,
             'deadline' => Carbon::createFromFormat('Y-m-d H:i:s', $this->deadline, config('app.timezone')),
-            'user_id' => $this->user_id,
         ];
     }
 }

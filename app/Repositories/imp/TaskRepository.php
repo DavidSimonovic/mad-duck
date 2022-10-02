@@ -90,9 +90,10 @@ class TaskRepository extends BaseRepository implements BaseRepositoryInterface
     public function createTask($request)
     {
         return Task::create([
-            'task_title' => $request->task_title,
-            'task_description' => $request->task_description,
+            'task_title' => $request->title,
+            'task_description' => $request->description,
             'user_id' => Auth::id(),
+            'status' => false,
             'todo_list_id' => $request->todo_list_id,
             'deadline' => $request->deadline,
         ]);
