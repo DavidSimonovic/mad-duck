@@ -25,7 +25,7 @@ class UpdateTodoListTitleRequest extends FormRequest
     public function rules()
     {
         return [
-            'new_title' => 'required|bail|string|mix:5|max:50'
+            'new_title' => 'required|bail|string|min:5|max:50'
         ];
     }
 }

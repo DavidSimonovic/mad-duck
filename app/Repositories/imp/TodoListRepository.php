@@ -55,8 +55,9 @@ class TodoListRepository extends BaseRepository implements BaseRepositoryInterfa
     {
         $todoList = $this->model->where('user_id', Auth::id())->where('id', $id)->first();
         $todoList->title = $newTitle;
+        $todoList->save();
 
-        return $todoList->save();
+        return $todoList;
     }
 
     /**
@@ -68,8 +69,9 @@ class TodoListRepository extends BaseRepository implements BaseRepositoryInterfa
     {
         $todoList = $this->model->where('user_id', Auth::id())->where('id', $id)->first();
         $todoList->description = $newDescription;
+        $todoList->save();
 
-        return $todoList->save();
+        return $todoList;
     }
 
     /**

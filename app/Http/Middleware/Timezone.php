@@ -24,7 +24,8 @@ class Timezone
 
         if (!$temp_timezone) {
 
-            $local = Auth::user()->timezone->name;
+            $local = Auth::check() ? Auth::user()->timezone->name : "UTC";
+
         } else {
             $local = $temp_timezone;
         }

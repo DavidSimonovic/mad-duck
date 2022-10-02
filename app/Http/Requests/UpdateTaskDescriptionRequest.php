@@ -25,7 +25,7 @@ class UpdateTaskDescriptionRequest extends FormRequest
     public function rules()
     {
         return [
-            'new_description' => 'required|bail|text|mix:5|max:255'
+            'new_description' => 'required|bail|min:5|max:255'
         ];
     }
 }

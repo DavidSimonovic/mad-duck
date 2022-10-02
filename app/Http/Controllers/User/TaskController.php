@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Helpers\HttpCode;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\UpdateTaskDeadlineRequest;
 use App\Http\Requests\UpdateTaskDescriptionRequest;
 use App\Http\Requests\UpdateTaskTitleRequest;
@@ -30,7 +31,7 @@ class TaskController extends Controller
      * @param UpdateTaskDescriptionRequest $request
      * @return JsonResponse
      */
-    public function updateDescription($id, UpdateTaskDescriptionRequest $request)
+    public function updateDescription($id, UpdateTaskDescriptionRequest $request): JsonResponse
     {
         $updateTitle = $this->taskRepository->updateDescription($id, $request->new_description);
 
@@ -41,28 +42,13 @@ class TaskController extends Controller
         return $this->returnResponseError(null, __('No task list with that id.'), HttpCode::NOT_FOUND);
     }
 
-    /**
-     * @param                           $id
-     * @param UpdateTaskDeadlineRequest $request
-     * @return JsonResponse
-     */
-    public function updateDeadline($id, UpdateTaskDeadlineRequest $request)
-    {
-        $updateTitle = $this->taskRepository->updateTitle($id, $request->new_deadline);
-
-        if ($updateTitle) {
-            return $this->returnResponseSuccess(new TaskResource($updateTitle), null, HttpCode::SUCCESS);
-        }
-
-        return $this->returnResponseError(null, __('No task list with that id.'), HttpCode::NOT_FOUND);
-    }
 
     /**
      * @param                        $id
      * @param UpdateTaskTitleRequest $request
      * @return JsonResponse
      */
-    public function updateTitle($id, UpdateTaskTitleRequest $request)
+    public function updateTitle($id, UpdateTaskTitleRequest $request): JsonResponse
     {
         $updateTitle = $this->taskRepository->updateTitle($id, $request->new_title);
 
@@ -78,22 +64,37 @@ class TaskController extends Controller
      * @param $id
      * @return JsonResponse
      */
-    public function updateStatus($id)
+    public function updateStatus($id): JsonResponse
     {
-        $updateTitle = $this->taskRepository->changeTaskStatus($id);
+        $updateStatus = $this->taskRepository->changeTaskStatus($id);
 
-        if ($updateTitle) {
-            return $this->returnResponseSuccess(new TaskResource($updateTitle), null, HttpCode::SUCCESS);
+        if ($updateStatus) {
+            return $this->returnResponseSuccess(new TaskResource($updateStatus), null, HttpCode::SUCCESS);
         }
 
         return $this->returnResponseError(null, __('No task list with that id.'), HttpCode::NOT_FOUND);
     }
 
     /**
+     * @param CreateTaskRequest $request
+     * @return JsonResponse
+     */
+    public function store(CreateTaskRequest $request)
+    {
+        $todoList = $this->taskRepository->createTask($request);
+
+        if ($todoList) {
+            return $this->returnResponseSuccess(new TaskResource($todoList), null, HttpCode::SUCCESS);
+        }
+
+        return $this->returnResponseError(null, __('No Todo list with that id.'), HttpCode::NOT_FOUND);
+    }
+
+    /**
      * @param $id
      * @return JsonResponse
      */
-    public function delete($id)
+    public function destroy($id): JsonResponse
     {
 
         if ($this->taskRepository->deleteTaskById($id)) {

@@ -23,7 +23,7 @@ class TaskResource extends JsonResource
             'task_title' => $this->task_title,
             'task_description' => $this->task_description,
             'status' => $this->status,
-            'deadline' => Carbon::createFromFormat('Y-m-d H:i:s', $this->deadline, 'Europe/Stockholm'),
+            'deadline' => Carbon::createFromFormat('Y-m-d H:i:s', $this->deadline, config('app.timezone')),
             'user_id' => $this->user_id,
         ];
     }

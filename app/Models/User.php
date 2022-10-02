@@ -21,7 +21,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'timezone_id'
+        'timezone_id',
     ];
 
     /**
@@ -46,6 +46,6 @@ class User extends Authenticatable
 
     public function timezone()
     {
-        return $this->hasOne(Timezone::class);
+        return $this->belongsTo(Timezone::class);
     }
 }

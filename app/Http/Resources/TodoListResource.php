@@ -22,7 +22,8 @@ class TodoListResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'finished_task_count' => count($this->tasks->where('status', 1)),
-            'unfinished_task_count' => count($this->tasks->where('status', 0))
+            'unfinished_task_count' => count($this->tasks->where('status', 0)),
+            'tasks' => TaskResource::collection($this->tasks)
         ];
     }
 }

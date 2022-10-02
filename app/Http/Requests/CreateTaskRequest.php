@@ -25,7 +25,9 @@ class CreateTaskRequest extends FormRequest
     public function rules()
     {
         return [
-
+            'title' => 'bail|required|string|max:50|min:2',
+            'description' => 'nullable|max:200|min:2',
+            'todo_list_id' =>'int|exists:todo_lists.id'
         ];
     }
 }

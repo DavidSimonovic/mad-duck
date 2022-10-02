@@ -44,11 +44,14 @@ class TaskRepository extends BaseRepository implements BaseRepositoryInterface
      */
     public function changeTaskStatus($id)
     {
-        $task = $this->model->where('user_id', Auth::id())->where('id', $id);
+
+        $task = $this->model->where('user_id', Auth::id())->where('id', $id)->first();
 
         $task->status ? $task->status = false : $task->status = true;
 
-        return $task->save();
+        $task->save();
+
+        return $task;
     }
 
 
@@ -59,10 +62,11 @@ class TaskRepository extends BaseRepository implements BaseRepositoryInterface
      */
     public function updateTitle($id, $newTitle): mixed
     {
-        $todoList = $this->model->where('user_id', Auth::id())->where('id', $id)->first();
-        $todoList->title = $newTitle;
+        $task = $this->model->where('user_id', Auth::id())->where('id', $id)->first();
+        $task->task_title = $newTitle;
+        $task->save();
 
-        return $todoList->save();
+        return $task;
     }
 
     /**
@@ -72,35 +76,27 @@ class TaskRepository extends BaseRepository implements BaseRepositoryInterface
      */
     public function updateDescription($id, $newDescription): mixed
     {
-        $todoList = $this->model->where('user_id', Auth::id())->where('id', $id)->first();
-        $todoList->description = $newDescription;
+        $task = $this->model->where('user_id', Auth::id())->where('id', $id)->first();
+        $task->task_description = $newDescription;
+        $task->save();
 
-        return $todoList->save();
-    }
-
-
-    /**
-     * @param $id
-     * @param $newDeadline
-     * @return mixed
-     */
-    public function updateDeadline($id, $newDeadline): mixed
-    {
-        $deadline = $this->model->where('user_id', Auth::id())->where('id', $id)->first();
-        $deadline->deadline = $newDeadline;
-
-        return $deadline->save();
+        return $task;
     }
 
     /**
-     * @param $id
+     * @param $request
      * @return mixed
      */
-    public function deleteTaskListById($id): mixed
+    public function createTask($request)
     {
-        return $this->model->where('user_id', Auth::id())->where('id', $id)->delete();
+        return Task::create([
+            'task_title' => $request->task_title,
+            'task_description' => $request->task_description,
+            'user_id' => Auth::id(),
+            'todo_list_id' => $request->todo_list_id,
+            'deadline' => $request->deadline,
+        ]);
     }
-
 
     /**
      * @param $id

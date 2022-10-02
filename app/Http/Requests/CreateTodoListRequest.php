@@ -26,7 +26,7 @@ class CreateTodoListRequest extends FormRequest
     {
         return [
             'title' => 'bail|required|string|max:50|min:2',
-            'description' => 'nullable|text|max:200|min:2'
+            'description' => 'bail|required|max:200|min:2'
         ];
     }
 }

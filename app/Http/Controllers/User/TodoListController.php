@@ -6,6 +6,7 @@ use App\Helpers\HttpCode;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateTodoListRequest;
 use App\Http\Requests\IndexRequest;
+use App\Http\Requests\UpdateTodoListDescriptionRequest;
 use App\Http\Requests\UpdateTodoListTitleRequest;
 use App\Http\Resources\SingleTodoListResource;
 use App\Http\Resources\TodoListResource;
@@ -46,7 +47,7 @@ class TodoListController extends Controller
      * @param CreateTodoListRequest $request
      * @return JsonResponse
      */
-    public function create(CreateTodoListRequest $request)
+    public function store(CreateTodoListRequest $request)
     {
         $todoList = $this->todoListRepository->createTodoList($request);
 
@@ -89,12 +90,28 @@ class TodoListController extends Controller
 
     }
 
+    /**
+     * @param                                  $id
+     * @param UpdateTodoListDescriptionRequest $request
+     * @return JsonResponse
+     */
+    public function updateDescription($id, UpdateTodoListDescriptionRequest $request): JsonResponse
+    {
+        $updateTitle = $this->todoListRepository->updateDescription($id, $request->new_description);
+
+        if ($updateTitle) {
+            return $this->returnResponseSuccess(new SingleTodoListResource($updateTitle), null, HttpCode::SUCCESS);
+        }
+
+        return $this->returnResponseError(null, __('No todo list with that id.'), HttpCode::NOT_FOUND);
+    }
+
 
     /**
      * @param $id
      * @return JsonResponse
      */
-    public function delete($id)
+    public function destroy($id)
     {
 
         if ($this->todoListRepository->deleteTodoListById($id)) {
