@@ -4,10 +4,13 @@ namespace Database\Seeders;
 
 use App\Models\Timezone;
 use App\Models\User;
+use Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Faker;
 
+/**
+ *
+ */
 class UserSeeder extends Seeder
 {
     /**

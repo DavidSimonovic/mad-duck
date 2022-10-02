@@ -1,0 +1,734 @@
+{
+	"info": {
+		"_postman_id": "705eba9f-f8d2-45bf-849d-e00187077d2b",
+		"name": "MadDuckToDoList",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"if (jsonData.data && jsonData.data.token) {",
+							"    postman.setEnvironmentVariable(\"bearer-token\", jsonData.data.token);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "david@test.com",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "david.simonovic",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456789",
+							"type": "text"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "123456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/register",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"if (jsonData.data && jsonData.data.token) {",
+							"    postman.setEnvironmentVariable(\"bearer-token\", jsonData.data.token);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "david@test.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"if (jsonData.data && jsonData.data.token) {",
+							"    postman.setEnvironmentVariable(\"bearer-token\", jsonData.data.token);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "david@test.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/logout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO | Store list",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "this is a new todo list",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "this is a new description for the new todo list",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/todo",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO | All lists for user with timezone",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-timezone",
+						"value": "America/Edmonton",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/todo",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO | All lists for user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/todo",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO | Single list for user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/todo/2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"todo",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO | Change title",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "this is a new todo list",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "this is a new description for the new todo list",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/todo",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO | Change description",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "new_description",
+							"value": "this is the new description",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/todo/description/35",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"todo",
+						"description",
+						"35"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO | Delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/todo/35",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"todo",
+						"35"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Title filter",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/todo?type=title&value=i",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"todo"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "title"
+						},
+						{
+							"key": "value",
+							"value": "i"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Date filter",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/todo?type=date&value=2022-10",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"todo"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "date"
+						},
+						{
+							"key": "value",
+							"value": "2022-10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Today filter",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/todo?type=today",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"todo"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "today"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TASK | Delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/task/21",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"task",
+						"21"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TASK | Change status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/task/status/52",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"task",
+						"status",
+						"52"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TASK | Change description",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "new_description",
+							"value": "this is the new description",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/task/description/52",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"task",
+						"description",
+						"52"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TASK | Change title",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "task title",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "task description",
+							"type": "text"
+						},
+						{
+							"key": "todo_list_id",
+							"value": "9",
+							"type": "text"
+						},
+						{
+							"key": "deadline",
+							"value": "2022-09-27 00:00:00",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/task",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TASK | Store task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "task title",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "task description",
+							"type": "text"
+						},
+						{
+							"key": "todo_list_id",
+							"value": "9",
+							"type": "text"
+						},
+						{
+							"key": "deadline",
+							"value": "2022-09-27 00:00:00",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/task",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"task"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

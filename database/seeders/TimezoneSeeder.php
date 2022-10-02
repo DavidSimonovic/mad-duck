@@ -3,9 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Timezone;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+/**
+ *
+ */
 class TimezoneSeeder extends Seeder
 {
     /**

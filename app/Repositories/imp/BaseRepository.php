@@ -4,7 +4,6 @@ namespace App\Repositories\imp;
 
 use App\Repositories\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
 /**
  *
@@ -34,7 +33,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function show(int $id): mixed
     {
-        return $this->model->where('id',$id)->get();
+        return $this->model->where('id', $id)->get();
     }
 
     /**
@@ -43,7 +42,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function delete(int $id): mixed
     {
-        return $this->model->where('id',$id)->delete();
+        return $this->model->where('id', $id)->delete();
     }
 
 }

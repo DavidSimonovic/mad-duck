@@ -9,6 +9,9 @@ use Carbon\Carbon;
 use Faker;
 use Illuminate\Database\Seeder;
 
+/**
+ *
+ */
 class TaskSeeder extends Seeder
 {
     /**
@@ -24,7 +27,7 @@ class TaskSeeder extends Seeder
 
             $user = User::inRandomOrder()->first();
 
-            $todoList = TodoList::where('user_id',$user->id)->inRandomOrder()->first();
+            $todoList = TodoList::where('user_id', $user->id)->inRandomOrder()->first();
 
 
             Task::create([
@@ -35,6 +38,7 @@ class TaskSeeder extends Seeder
                 'todo_list_id' => $todoList->id,
                 'deadline' => Carbon::today()->subDays(+5),
             ]);
+
             Task::create([
                 'task_title' => $faker->word,
                 'task_description' => $faker->text(60),
