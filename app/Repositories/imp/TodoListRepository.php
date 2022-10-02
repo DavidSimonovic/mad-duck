@@ -21,6 +21,11 @@ class TodoListRepository extends BaseRepository implements BaseRepositoryInterfa
     }
 
 
+    /**
+     * @param $request
+     * @param $per_page
+     * @return mixed
+     */
     public function filterTodoLists($request, $per_page): mixed
     {
         $data = $this->model->where('user_id', Auth::id())->orderByDesc('id')->paginate($per_page);
@@ -76,12 +81,17 @@ class TodoListRepository extends BaseRepository implements BaseRepositoryInterfa
         return $this->model->where('user_id', Auth::id())->where('id', $id)->delete();
     }
 
+
+    /**
+     * @param $request
+     * @return mixed
+     */
     public function createTodoList($request)
     {
-        $this->model->create([
+        return $this->model->create([
             'title' => $request->title,
             'description' => $request->description,
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
         ]);
     }
 }

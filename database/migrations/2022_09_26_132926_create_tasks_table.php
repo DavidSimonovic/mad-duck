@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('task_description');
             $table->foreignId('user_id');
             $table->boolean('status');
-            $table->foreignId('todo_list_id');
+            $table->foreignId('todo_list_id')->onDelete('cascade');;
             $table->enum('urgency',config('todo_urgency'));
             $table->timestamp('deadline');
             $table->timestamps();

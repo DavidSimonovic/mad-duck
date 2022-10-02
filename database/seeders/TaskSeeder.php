@@ -23,6 +23,7 @@ class TaskSeeder extends Seeder
         for ($i = 0; $i < 150; $i++) {
 
             $user = User::inRandomOrder()->first();
+
             $todoList = TodoList::where('user_id',$user->id)->inRandomOrder()->first();
 
 

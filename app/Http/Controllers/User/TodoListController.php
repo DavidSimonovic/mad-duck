@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Helpers\HttpCode;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateTodoListRequest;
 use App\Http\Requests\IndexRequest;
 use App\Http\Requests\UpdateTodoListTitleRequest;
 use App\Http\Resources\SingleTodoListResource;
@@ -31,7 +32,7 @@ class TodoListController extends Controller
      */
     public function index(IndexRequest $request)
     {
-        $todoLists = $this->todoListRepository->filterTodoLists($request,$request->per_page ?: config('pagination.per_page'));
+        $todoLists = $this->todoListRepository->filterTodoLists($request, $request->per_page ?: config('pagination.per_page'));
 
         if ($todoLists->count() > 0) {
             return $this->returnResponseSuccessWithPagination(TodoListResource::collection($todoLists), null);
@@ -40,9 +41,20 @@ class TodoListController extends Controller
         return $this->returnResponseError(null, __('No customers.'), HttpCode::NOT_FOUND);
     }
 
-    public function create()
-    {
 
+    /**
+     * @param CreateTodoListRequest $request
+     * @return JsonResponse
+     */
+    public function create(CreateTodoListRequest $request)
+    {
+        $todoList = $this->todoListRepository->createTodoList($request);
+
+        if ($todoList) {
+            return $this->returnResponseSuccess(new SingleTodoListResource($todoList), null, HttpCode::SUCCESS);
+        }
+
+        return $this->returnResponseError(null, __('No Todo list with that id.'), HttpCode::NOT_FOUND);
     }
 
     /**
@@ -75,6 +87,20 @@ class TodoListController extends Controller
 
         return $this->returnResponseError(null, __('No Todo list with that id.'), HttpCode::NOT_FOUND);
 
+    }
 
+
+    /**
+     * @param $id
+     * @return JsonResponse
+     */
+    public function delete($id)
+    {
+
+        if ($this->todoListRepository->deleteTodoListById($id)) {
+            return $this->returnResponseSuccess(null, null, HttpCode::SUCCESS);
+        }
+
+        return $this->returnResponseError(null, __('No Todo list with that id.'), HttpCode::NOT_FOUND);
     }
 }
