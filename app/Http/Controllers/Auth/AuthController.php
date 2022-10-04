@@ -9,6 +9,7 @@ use App\Http\Requests\Auth\Register;
 use App\Repositories\imp\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -27,7 +28,7 @@ class AuthController extends Controller
     {
         auth()->user()->tokens()->delete();
 
-        return $this->returnResponseSuccess(null, __('Logged out'), 200);
+        return $this->returnResponseSuccess(null, __('Logged out'), Response::HTTP_OK);
     }
 
     /**
@@ -40,11 +41,11 @@ class AuthController extends Controller
         $user = $this->userRepository->userByEmail($request->email);
 
         if ($user->blocked) {
-            return $this->returnResponseError(null, __('User is blocked'), HttpCode::UNAUTHORIZED);
+            return $this->returnResponseError(null, __('User is blocked'), Response::HTTP_UNAUTHORIZED);
         }
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return $this->returnResponseError(null, __('Bad credentials'), 401);
+            return $this->returnResponseError(null, __('Bad credentials'), Response::HTTP_UNAUTHORIZED);
         }
 
         return $this->returnResponseSuccess(
@@ -65,7 +66,7 @@ class AuthController extends Controller
         return $this->returnResponseSuccess(
             ['token' => $user->createToken(config('auth.token_prefix'))->plainTextToken],
             __('You have successfully signed up'),
-            200
+            Response::HTTP_CREATED
         );
     }
 }

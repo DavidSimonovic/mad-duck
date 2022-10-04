@@ -23,8 +23,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    require_once('task.php');
-    require_once('todo.php');
+
 
 });
 

@@ -34,14 +34,20 @@ class SendDailyMail extends Command
      */
     public function handle()
     {
-        $users = User::all();
+        $userCount = User::all()->count();
 
-        foreach ($users as $user) {
+        for ($i = 0; $i < $userCount / 100; $i++) {
+
+            $users = User::skip($i * 100)
+                ->take(100)
+                ->get();
+
+            foreach ($users as $user){
 
             $endOfTheDay = Carbon::now()->endOfDay();
             $userTime = Carbon::now($user->timezone->name);
 
-            if ($userTime->format('H:i') == $endOfTheDay->format('H:i')) {
+            if ($userTime->format('H:i') === $endOfTheDay->format('H:i')) {
 
                 $task_count = Task::where('user_id', $user->id)
                     ->where('status', true)
@@ -50,7 +56,7 @@ class SendDailyMail extends Command
 
                 Mail::to($user->email)->send(new CompletedTasks($task_count));
             }
-        }
+        }}
 
     }
 }

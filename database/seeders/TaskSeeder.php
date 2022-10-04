@@ -23,9 +23,11 @@ class TaskSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
+        $users = User::take(10);
+
         for ($i = 0; $i < 150; $i++) {
 
-            $user = User::inRandomOrder()->first();
+            $user = $users->inRandomOrder()->first();
 
             $todoList = TodoList::where('user_id', $user->id)->inRandomOrder()->first();
 
@@ -39,23 +41,6 @@ class TaskSeeder extends Seeder
                 'deadline' => Carbon::today()->subDays(+5),
             ]);
 
-            Task::create([
-                'task_title' => $faker->word,
-                'task_description' => $faker->text(60),
-                'status' => $faker->boolean,
-                'user_id' => $user->id,
-                'todo_list_id' => $todoList->id,
-                'deadline' => Carbon::today()->subDays(+15),
-            ]);
-
-            Task::create([
-                'task_title' => $faker->word,
-                'task_description' => $faker->text(60),
-                'status' => $faker->boolean,
-                'user_id' => $user->id,
-                'todo_list_id' => $todoList->id,
-                'deadline' => Carbon::today()->subDays(+20),
-            ]);
         }
     }
 }

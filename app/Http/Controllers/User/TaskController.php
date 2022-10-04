@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateTaskTitleRequest;
 use App\Http\Resources\TaskResource;
 use App\Repositories\imp\TaskRepository;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  *
@@ -36,10 +37,10 @@ class TaskController extends Controller
         $updateTitle = $this->taskRepository->updateDescription($id, $request->new_description);
 
         if ($updateTitle) {
-            return $this->returnResponseSuccess(new TaskResource($updateTitle), null, HttpCode::SUCCESS);
+            return $this->returnResponseSuccess(new TaskResource($updateTitle), null, Response::HTTP_CREATED);
         }
 
-        return $this->returnResponseError(null, __('No task list with that id.'), HttpCode::NOT_FOUND);
+        return $this->returnResponseError(null, __('No task list with that id.'), Response::HTTP_NOT_FOUND);
     }
 
 
@@ -53,10 +54,10 @@ class TaskController extends Controller
         $updateTitle = $this->taskRepository->updateTitle($id, $request->new_title);
 
         if ($updateTitle) {
-            return $this->returnResponseSuccess(new TaskResource($updateTitle), null, HttpCode::SUCCESS);
+            return $this->returnResponseSuccess(new TaskResource($updateTitle), null, Response::HTTP_CREATED);
         }
 
-        return $this->returnResponseError(null, __('No task list with that id.'), HttpCode::NOT_FOUND);
+        return $this->returnResponseError(null, __('No task list with that id.'), Response::HTTP_NOT_FOUND);
     }
 
 
@@ -69,10 +70,10 @@ class TaskController extends Controller
         $updateStatus = $this->taskRepository->changeTaskStatus($id);
 
         if ($updateStatus) {
-            return $this->returnResponseSuccess(new TaskResource($updateStatus), null, HttpCode::SUCCESS);
+            return $this->returnResponseSuccess(new TaskResource($updateStatus), null, Response::HTTP_CREATED);
         }
 
-        return $this->returnResponseError(null, __('No task list with that id.'), HttpCode::NOT_FOUND);
+        return $this->returnResponseError(null, __('No task list with that id.'), Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -85,10 +86,10 @@ class TaskController extends Controller
         $task = $this->taskRepository->createTask($request);
 
         if ($task) {
-            return $this->returnResponseSuccess(new TaskResource($task), null, HttpCode::SUCCESS);
+            return $this->returnResponseSuccess(new TaskResource($task), null, Response::HTTP_CREATED);
         }
 
-        return $this->returnResponseError(null, __('Something went wrong'), HttpCode::BAD_REQUEST);
+        return $this->returnResponseError(null, __('Something went wrong'), Response::HTTP_BAD_REQUEST);
     }
 
     /**
@@ -99,9 +100,9 @@ class TaskController extends Controller
     {
 
         if ($this->taskRepository->deleteTaskById($id)) {
-            return $this->returnResponseSuccess(null, null, HttpCode::SUCCESS);
+            return $this->returnResponseSuccess(null, null, Response::HTTP_OK);
         }
 
-        return $this->returnResponseError(null, __('No task list with that id.'), HttpCode::NOT_FOUND);
+        return $this->returnResponseError(null, __('No task list with that id.'), Response::HTTP_NOT_FOUND);
     }
 }
